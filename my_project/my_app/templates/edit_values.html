@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Edit Values
+{% endblock %}
+
+{% block content %}
+<div class="model_content">
+    <div class="model" style="align-items: center;">
+        <h3 class="id_number">Редактировать связь</h3>
+        <form action="{% url 'update_values' table_name=table_name %}" method="POST">
+            {% csrf_token %}
+            {% for row in table_data %}
+                {% if row.type == 'relationship' %}
+                    <div class="mb-2 w-50 p-3" style="margin:auto;">
+                        <input type="text" class="form-control" id="value_{{ row.id }}" name="value_{{ row.id }}" value="{{ row.value }}" style="margin:auto; text-align:center; margin-bottom: 20px">
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <button class="submit_btn" type="submit" style="margin: 0 auto; display: flex; margin-top: 30px">
+                Обновить
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

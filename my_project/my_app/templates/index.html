@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+<div class="model_content">
+    <div class="model" style="align-items: center;">
+        <h3 class="id_number">Загрузите xml файл
+        </h3>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <div class="mb-2 p-3" style="margin:auto;">
+                <input class="form-control" type="file" id="formFile" name="file">
+            </div>
+            {% csrf_token %}
+            <button class="submit_btn" type="submit" style="margin: 0 auto;
+    display: flex; margin-top: 30px">
+
+                Загрузить
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

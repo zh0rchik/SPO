@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Entity View
+{% endblock %}
+{% block content %}
+<style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: white;
+    }
+    th, td {
+      border: 1px solid white;
+      padding: 10px;
+      max-width: 100%;
+      width: 300px;
+      text-align: center;
+    }
+    th {
+      background-color: #4caf50;
+    }
+</style>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 50px; background-color: #343a40">
+    <div style="gap: 30px; display: flex; align-items: center; flex-direction: column;">
+        <div style="color:white; gap: 20px; display: flex; align-items: center; flex-direction: column;">
+            <h2>Связи с сущностью "{{ terms.0.0 }}"</h2>
+            <p>Описание для сущности {{ terms.0.0 }}: {{ terms.0.1 }}</p>
+            <p>Тип сущности: {{ terms.0.2 }}</p>
+            {% if child_store.0.0 %}
+            <h3>Вложенная сущность - хранилище данных:</h3>
+            <p>Название вложенной сущности: "{{ child_store.0.0 }}"</p>
+            <p>Описание вложенной сущности: "{{ child_store.0.1 }}"</p>
+            {% endif %}
+        </div>
+        <table style="color: white">
+            {% for entity in all_entity %}
+            <tr>
+                <td style="font-size: 20px">{{ entity.0 }}</td>
+                <td style="font-size: 20px">---</td>
+                <td style="font-size: 20px">{{ entity.1 }}</td>
+                <td style="font-size: 20px">---></td>
+                <td style="font-size: 20px">{{ entity.2 }}</td>
+                <td style="font-size: 20px">---></td>
+                <td style="font-size: 20px"><a href="{% url 'entity_view' table_name entity.4 %}" style="text-decoration: none; color: #F50563">{{ entity.3 }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

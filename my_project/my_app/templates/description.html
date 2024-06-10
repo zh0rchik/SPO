@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Description view
+{% endblock %}
+
+{% block content %}
+<style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: white;
+    }
+    th,
+    td {
+      border: 1px solid white;
+      padding: 10px;
+      max-width: 100%;
+      width: 300px;
+      text-align: center;
+    }
+    th {
+      background-color: #4caf50;
+    }
+</style>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 50px">
+    <div style="gap: 30px; display: flex; align-items: center; flex-direction: column;">
+        <table style="color: white">
+            <tr>
+                <th>Термины</th>
+                <th>Описание</th>
+            </tr>
+            {% for term in terms %}
+                {% if term.1 != '' and term.5 != 'relationship' %}
+                    <tr>
+                        <td><a class="submit_btn" href="/entity_view/{{ table_name }}/{{ term.2 }}">{{ term.0 }}</a></td>
+                        <td>{{ term.1 }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+            <a class="submit_btn" href="{% url 'edit_desc' table_name=table_name %}" style="color: white">Редактирование описания</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

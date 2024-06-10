@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Data
+{% endblock %}
+
+{% block content %}
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    color: white\;
+
+  }
+  th,
+  td {
+    border: 1px solid white;
+    padding: 10px;
+    max-width: 100%;
+    width: 300px;
+    text-align: center;
+  }
+  th {
+    background-color: #4caf50;
+  }
+</style>
+<div
+  style="display: flex; flex-direction: column; align-items: center; gap: 50px; background-color: #343a40"
+>
+  <div
+    style="
+      gap: 30px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    "
+  >
+    <table style="color: white">
+      <tr>
+        <th>Файл</th>
+        <th>Связи</th>
+        <th>Управление</th>
+      </tr>
+      {% for uploaded_file in uploaded_files %}
+      <tr>
+        <td>{{ uploaded_file }}</td>
+
+        <td>
+          <a href="{% url 'table_view' uploaded_file %}" style="color: white">Просмотр связей для файла <h2 style="color: yellow">{{ uploaded_file }}</h2></a>
+        </td>
+        <td>
+          <form action="{% url 'delete_file' uploaded_file %}" method="POST" style="display:inline;">
+            {% csrf_token %}
+            <button class="delete_btn" type="submit" style="margin: 0 auto;
+    display: flex; margin-top: 0px">
+                Удалить
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

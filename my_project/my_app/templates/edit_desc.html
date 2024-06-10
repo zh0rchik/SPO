@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Edit description
+{% endblock %}
+
+{% block content %}
+<style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: white;
+    }
+    th,
+    td {
+      border: 1px solid white;
+      padding: 10px;
+      max-width: 100%;
+      width: 300px;
+      text-align: center;
+    }
+    th {
+      background-color: #4caf50;
+    }
+</style>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 50px">
+    <div style="gap: 30px; display: flex; align-items: center; flex-direction: column;">
+        <form action="{% url 'update_description' table_name=table_name %}" method="POST">
+            {% csrf_token %}
+            <table style="color: white">
+                <tr>
+                    <th>Термины</th>
+                    <th>Редактирование Описания</th>
+                </tr>
+                {% for row in table_data %}
+                    {% if row.type != 'relationship' and row.value != '' %}
+                        <tr>
+                            <th scope="row">{{ row.value }}</th>
+                            <td>
+                                <input type="text" class="form-control" id="desc_{{ row.id }}" name="desc_{{ row.id }}" value="{{ row.description }}" style="width:40%; margin:auto; text-align:center;">
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+            <button type="submit" class="submit_btn" style="display: flex; margin: 0 auto; margin-top: 20px">
+                Обновить описание
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

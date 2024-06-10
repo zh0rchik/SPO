@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Table
+{% endblock %}
+
+{% block content %}
+<style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: white;
+    }
+    th,
+    td {
+      border: 1px solid white;
+      padding: 10px;
+      max-width: 100%;
+      width: 300px;
+      text-align: center;
+    }
+    th {
+      background-color: #4caf50;
+    }
+    #graphContainer {
+        width: 100%;
+        height: 600px;
+        background-color: white;
+        border: 1px solid #ccc;
+        margin-top: 20px;
+    }
+</style>
+
+<div
+        style="display: flex; flex-direction: column; align-items: center; gap: 50px"
+>
+    <!--<div id="graphContainer"></div>--> <!-- Контейнер для диаграммы -->
+
+    <div
+            style="
+      gap: 30px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    "
+    >
+        <table style="color: white; background-color: #343a40;" >
+            {% for el in diagramm %}
+            <tr>
+                <td style="font-size: 20px"><a style="text-decoration: none; color: #F50563" href="/entity_view/{{ table_name }}/{{ el.3 }}">{{ el.0 }} </a></td>
+                <td style="font-size: 20px">--- </td>
+                <td style="font-size: 20px">{{ el.1 }}</td>
+                <td style="font-size: 20px"> ---> </td>
+                <td style="font-size: 20px"><a style="text-decoration: none; color: #F50563" href="/entity_view/{{ table_name }}/{{ el.4 }}">{{ el.2 }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div>
+            <ul class="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px" data-bs-theme="dark">
+                <li><a class="dropdown-item rounded-2 active" href="#">Action</a></li>
+                <li><a class="dropdown-item rounded-2" href="#">Another action</a></li>
+                <li><a class="dropdown-item rounded-2" href="#">Something else here</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item rounded-2" href="#">Separated link</a></li>
+            </ul>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+            <a class="submit_btn" href="{% url 'edit_values' table_name=table_name %}" style="color: white">Редактирование связей</a>
+            <a class="submit_btn" href="{% url 'edit_desc' table_name=table_name %}" style="color: white">Редактирование описания</a>
+            <a class="submit_btn" href="{% url 'description' table_name=table_name %}" style="color: white">Просмотр описания</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            var container = document.getElementById('graphContainer');
+            var graph = new mxGraph(container);
+
+            var parent = graph.getDefaultParent();
+            graph.getModel().beginUpdate();
+            try {
+                var vertex1 = graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30);
+                var vertex2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
+                graph.insertEdge(parent, null, '', vertex1, vertex2);
+            } finally {
+                graph.getModel().endUpdate();
+            }
+        });
+    </script>
+{% endblock %}
